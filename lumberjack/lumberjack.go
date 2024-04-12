@@ -18,7 +18,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sort"
@@ -390,7 +389,7 @@ func (l *Logger) mill() {
 // oldLogFiles returns the list of backup lumberjack files stored in the same
 // directory as the current lumberjack file, sorted by ModTime
 func (l *Logger) oldLogFiles() ([]logInfo, error) {
-	files, err := ioutil.ReadDir(l.dir())
+	files, err := os.ReadDir(l.dir())
 	if err != nil {
 		return nil, fmt.Errorf("can't read lumberjack file directory: %s", err)
 	}
