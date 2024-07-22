@@ -59,11 +59,6 @@ func (l *CtxLogger) appendCtxArgs(ctx context.Context, args ...any) []any {
 	return args
 }
 
-/*****************对外暴露的接口，增加一个调用层级，和包中的日志函数调用层级对齐********************/
-func (l *CtxLogger) TrackHTTP(ctx context.Context, errcode int, errMsg string, reqType string, url string, reqBody string, resp string) {
-	l.trackHTTP(ctx, errcode, errMsg, reqType, url, reqBody, resp)
-}
-
 func (l *CtxLogger) Debug(ctx context.Context, msg string) {
 	l.debug(ctx, msg)
 }
@@ -152,9 +147,9 @@ func (l *CtxLogger) Fatalw(ctx context.Context, msg string, args ...any) {
 
 func (l *CtxLogger) trackRPC(ctx context.Context, errcode int, errMsg string, req any, resp any) {
 	data, exist := GetCtxData(ctx)
-	msg := fmt.Sprintf("[%s] [errcode:%d] [errmsg:%s] [req:%+v] [resp:%+v]", data.Infc, errcode, errMsg, req, resp)
+	msg := fmt.Sprintf("[%s] [errcode:%d] [msg:%s] [req:%+v] [resp:%+v]", data.Infc, errcode, errMsg, req, resp)
 	if exist {
-		msg = fmt.Sprintf("%s [trackid:%d] [requester:%s] [infc:%s] [bfouid:%d] [uid:%s] [cost:%d]", msg, data.TrackID, data.Requester, data.Infc, data.UUID, data.UUID, time.Since(data.StartTime).Milliseconds())
+		msg = fmt.Sprintf("%s [trackid:%d] [requester:%s] [infc:%s] [uid:%s] [cost:%d]", msg, data.TrackID, data.Requester, data.Infc, data.UUID, time.Since(data.StartTime).Milliseconds())
 		if len(data.Ext) > 0 {
 			extMsg := ""
 			for k, v := range data.Ext {
@@ -170,9 +165,9 @@ func (l *CtxLogger) trackRPC(ctx context.Context, errcode int, errMsg string, re
 
 func (l *CtxLogger) trackHTTP(ctx context.Context, errcode int, errMsg string, reqType string, url string, reqBody string, resp string) {
 	data, exist := GetCtxData(ctx)
-	msg := fmt.Sprintf("[%s] [%s] [errcode:%d] [errmsg:%s] [url:%s] [body:%s] [resp:%s]", data.Infc, reqType, errcode, errMsg, url, reqBody, resp)
+	msg := fmt.Sprintf("[%s] [%s] [errcode:%d] [msg:%s] [url:%s] [body:%s] [resp:%s]", data.Infc, reqType, errcode, errMsg, url, reqBody, resp)
 	if exist {
-		msg = fmt.Sprintf("%s [requester:%s] [infc:%s] [bfouid:%d] [uid:%s] [cost:%d]", msg, data.Requester, data.Infc, data.UUID, data.UUID, time.Since((data.StartTime)).Milliseconds())
+		msg = fmt.Sprintf("%s [requester:%s] [infc:%s] [uid:%s] [cost:%d]", msg, data.Requester, data.Infc, data.UUID, time.Since((data.StartTime)).Milliseconds())
 		if len(data.Ext) > 0 {
 			extMsg := ""
 			for k, v := range data.Ext {

@@ -17,9 +17,9 @@ var (
 
 // track log 扩展信息,用于非必填项 见日志规范 track日志
 type ExtTrackInfo struct {
-	ErrMsg   string `json:"errmsg"`   // 本次请求服务对外提供的返回短语
 	Req      string `json:"req"`      // 本次请求的原始入参
 	Resp     string `json:"resp"`     // 本次请求的返回结果
+	Msg      string `json:"msg"`      // 本次请求服务对外提供的返回短语
 	DeviceID string `json:"deviceid"` // 从客户端带过来的设备ID
 }
 
@@ -28,7 +28,6 @@ type ExtTrackInfo struct {
 // @filePath 日志所在目录
 // @maxAge 日志备份最长时间 单位小时
 // @rotateTime 多久切分一次 单位小时
-// @ctxFunc 见bfo_ctx_logger type CtxFunc func(ctx context.Context) map[string]any, 一个解析ctx中数据的函数,用于日志记录
 func NewTrackLogger(serviceName string, filePath string, maxAge int, rotateTime int, exposedKey []string) *CtxLogger {
 	hook := timeRotateHook(filePath+"/track.log", &TimeRotateConfig{
 		FileNameFormat: "%Y-%m-%d",
@@ -52,22 +51,6 @@ func NewTrackLogger(serviceName string, filePath string, maxAge int, rotateTime 
 	// 单独new track logger, default和track默认用同一个logger
 	return NewCtxLogger(sugar, sugar, exposedKey)
 
-}
-
-// InitTrackLogger 默认初始化track logger
-// @serviceName 服务/模块名称
-// @ctxFunc 见bfo_ctx_logger type CtxFunc func(ctx context.Context) map[string]any, 一个解析ctx中数据的函数,用于日志记录
-func InitTrackLogger(serviceName string, exposedKey []string) {
-	logger := NewTrackLogger(serviceName, "./logs/", 24*7, 24, exposedKey)
-	SetTrackLogger(logger)
-}
-
-// InitStdoutTrackLogger 以stdout作为输出的track logger，用于debug和docker部署
-// @serviceName 服务/模块名称
-// @ctxFunc 见bfo_ctx_logger type CtxFunc func(ctx context.Context) map[string]any, 一个解析ctx中数据的函数,用于日志记录
-func InitStdoutTrackLogger(serviceName string, exposedKey []string) {
-	logger := NewStdoutLoggerWithExposedKey(serviceName, "track", JsonFormat, "info", exposedKey)
-	SetTrackLogger(logger)
 }
 
 func SetTrackLogger(lg *CtxLogger) {
