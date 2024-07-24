@@ -3,13 +3,13 @@ module github.com/pemako/gopkg/ctxlog
 go 1.22.1
 
 require (
-	github.com/pemako/gopkg/lumberjack v0.1.4
-	github.com/pemako/gopkg/rotatelogs v0.1.4
+	github.com/pemako/gopkg/lumberjack v0.1.5
+	github.com/pemako/gopkg/rotatelogs v0.1.5
 	go.uber.org/zap v1.27.0
 )
 
 require (
-	github.com/pemako/gopkg/strftime v0.1.4 // indirect
+	github.com/pemako/gopkg/strftime v0.1.5 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
 )
 
