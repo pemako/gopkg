@@ -8,11 +8,10 @@ import (
 const CTX_KEY = "CONTEXT_DATA_KEY"
 
 type Ctx struct {
-	UUID      string         // 本次请求的Track id
+	UUID      string         // 本次请求的唯一id
 	Infc      string         // 接口名称
-	Req       string         // 请求 Requester标识，可从request header获取
 	Ext       map[string]any // 用于自定义set一些值
-	StartTime time.Time      // 开始处理请求的starttime
+	StartTime time.Time      // 开始处理请求的 starttime
 }
 
 // GenDefaultCtxData 生成默认的atlantis ctx data 会携带一些默认的环境信息

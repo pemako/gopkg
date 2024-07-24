@@ -42,7 +42,7 @@ func (l *CtxLogger) appendCtxArgs(ctx context.Context, args ...any) []any {
 		}
 	}
 
-	cost := time.Since(data.StartTime).Microseconds()
+	cost := time.Since(data.StartTime).Milliseconds()
 	ext = append(ext, "uuid", data.UUID)
 	ext = append(ext, "infc", data.Infc)
 	ext = append(ext, "req", data.Req)
@@ -141,43 +141,6 @@ func (l *CtxLogger) Panicw(ctx context.Context, msg string, args ...any) {
 func (l *CtxLogger) Fatalw(ctx context.Context, msg string, args ...any) {
 	l.fatalw(ctx, msg, args...)
 }
-
-/*****************实际执行日志逻辑的函数************************/
-
-// func (l *CtxLogger) trackRPC(ctx context.Context, errcode int, errMsg string, req any, resp any) {
-// 	data, exist := GetCtxData(ctx)
-// 	msg := fmt.Sprintf("[%s] [errcode:%d] [msg:%s] [req:%+v] [resp:%+v]", data.Infc, errcode, errMsg, req, resp)
-// 	if exist {
-// 		msg = fmt.Sprintf("%s [trackid:%d] [requester:%s] [infc:%s] [cost:%d]", msg, data.TrackID, data.Requester, data.Infc, time.Since(data.StartTime).Milliseconds())
-// 		if len(data.Ext) > 0 {
-// 			extMsg := ""
-// 			for k, v := range data.Ext {
-// 				extMsg += fmt.Sprintf(" [%s:%+v]", k, v)
-// 			}
-// 			msg += extMsg
-// 		}
-// 	}
-
-// 	args := l.appendCtxArgs(ctx)
-// 	l.trackLogger.Infow(msg, args...)
-// }
-
-// func (l *CtxLogger) trackHTTP(ctx context.Context, errcode int, errMsg string, reqType string, url string, reqBody string, resp string) {
-// 	data, exist := GetCtxData(ctx)
-// 	msg := fmt.Sprintf("[%s] [%s] [errcode:%d] [msg:%s] [url:%s] [body:%s] [resp:%s]", data.Infc, reqType, errcode, errMsg, url, reqBody, resp)
-// 	if exist {
-// 		msg = fmt.Sprintf("%s [requester:%s] [infc:%s] [trackid:%s] [cost:%d]", msg, data.Requester, data.Infc, data.TrackID, time.Since((data.StartTime)).Milliseconds())
-// 		if len(data.Ext) > 0 {
-// 			extMsg := ""
-// 			for k, v := range data.Ext {
-// 				extMsg += fmt.Sprintf(" [%s:%+v]", k, v)
-// 			}
-// 			msg += extMsg
-// 		}
-// 	}
-// 	args := l.appendCtxArgs(ctx)
-// 	l.trackLogger.Infow(msg, args...)
-// }
 
 func (l *CtxLogger) debug(ctx context.Context, msg string) {
 	args := l.appendCtxArgs(ctx)
