@@ -66,7 +66,7 @@ ___replace_spec_tag() {
   # 替换项目根目录下的 go.mod
   sed -i "s|$repo $version|$repo $newVersion|g" go.mod
   # 替换 verion.go 中的上报上报版本
-  sed -i "s|$version|$newVersion|g" version.go
+  # sed -i "s|$version|$newVersion|g" version.go
 }
 
 ___go_mod_tidy() {

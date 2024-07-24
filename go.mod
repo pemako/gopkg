@@ -3,6 +3,7 @@ module github.com/pemako/gopkg
 go 1.22.1
 
 replace (
+	github.com/pemako/gopkg/guid => ./guid
 	github.com/pemako/gopkg/config => ./config
 	github.com/pemako/gopkg/ctxlog => ./ctxlog
 	github.com/pemako/gopkg/envload => ./envload
