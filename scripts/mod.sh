@@ -2,6 +2,7 @@
 
 ___modules() {
   modules=(
+    "guid"
     "ctxlog"
     "config"
     "envload"
