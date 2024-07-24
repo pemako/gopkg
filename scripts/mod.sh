@@ -8,6 +8,7 @@ ___modules() {
     "envload"
     "logger"
     "lumberjack"
+    "strftime"
     "rotatelogs")
   echo "${modules[@]}"
 }
