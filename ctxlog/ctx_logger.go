@@ -45,7 +45,6 @@ func (l *CtxLogger) appendCtxArgs(ctx context.Context, args ...any) []any {
 	cost := time.Since(data.StartTime).Milliseconds()
 	ext = append(ext, "uuid", data.UUID)
 	ext = append(ext, "infc", data.Infc)
-	ext = append(ext, "req", data.Req)
 	ext = append(ext, "cost", cost)
 
 	for k, v := range data.Ext {
